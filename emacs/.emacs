@@ -1,3 +1,9 @@
+;;
+;; Add the following to ~/.emacs
+;; (load-file "C:/Git/config/emacs/.emacs")
+;;
+
+
 (setq backup-inhibited t)
 (global-set-key "\C-z" 'shell)
 
@@ -18,6 +24,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Fira Code Medium" :foundry "outline" :slant normal :weight normal :height 135 :width normal)))))
+ '(default ((t (:family "Fira Code Medium" :foundry "outline" :slant normal :weight normal :height 120 :width normal)))))
 
+
+
+;(load-file "snippets.el")
+
+(defvar cbext-dir (file-name-directory load-file-name))
+
+(load-file (format "%s/snippets.el" cbext-dir))
 

@@ -11,7 +11,6 @@
              '("melpa" . "https://melpa.org/packages/")
              t)
 
-
 (custom-set-variables
  '(global-linum-mode t)
  '(indent-tabs-mode nil)
@@ -19,8 +18,9 @@
  
 (defvar cbext-dir (file-name-directory load-file-name))
 
-
 (load-file (format "%s/snippets.el" cbext-dir))
 (load-file (format "%s/use_haskell.el" cbext-dir))
 (load-file (format "%s/use_ggtags.el" cbext-dir))
 
+; (load-theme 'zenburn t)
+; (set-face-attribute 'region nil :background "#559")

@@ -1,0 +1,31 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "ctrl+a",
+        "command": "cursorLineStart"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "cursorLineEnd"
+    },
+    {
+        "key": "ctrl+shift+a",
+        "command": "editor.action.selectAll",
+    },
+    {
+        "key": "ctrl+y",
+        "command": "editor.action.clipboardPasteAction",
+    },
+    {
+        "key": "ctrl+k",
+        "command": "extension.multiCommand.execute",
+        "args": {
+            "sequence": [
+                "cursorLineStart",
+                "cursorEndSelect",
+                "editor.action.clipboardCutAction"
+            ]
+        },
+        "when": "editorTextFocus" // if you want this, you probably do
+    }
+]

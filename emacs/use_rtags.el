@@ -1,5 +1,5 @@
 
-(add-to-list 'load-path "/opt/rtags/share/emacs/site-lisp/rtags/")
+(add-to-list 'load-path "/opt/rtags/usr/local/share/emacs/site-lisp/rtags/")
 (require 'rtags)
 (require 'company-rtags)
 

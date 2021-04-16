@@ -19,9 +19,9 @@
 (defvar cbext-dir (file-name-directory load-file-name))
 
 (load-file (format "%s/snippets.el" cbext-dir))
-(load-file (format "%s/use_ggtags.el" cbext-dir))
+;(load-file (format "%s/use_ggtags.el" cbext-dir))
 ;(load-file (format "%s/use_haskell.el" cbext-dir))
-;(load-file (format "%s/use_rtags.el" cbext-dir))
+(load-file (format "%s/use_rtags.el" cbext-dir))
 
 
 (load-theme 'zenburn t)

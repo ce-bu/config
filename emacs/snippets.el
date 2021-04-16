@@ -29,3 +29,15 @@
   (snip-empty)
   (insert-file-contents (snip-file "main.cpp")))
 
+
+(defun snip-ifdef ()
+  (interactive)
+  (require 'uuid)
+  (save-excursion
+    (goto-char (point-min))
+    (let* ((id (upcase (replace-regexp-in-string "-" "_" (uuid-string)))))
+      (insert (format "#ifdef  %s_H\n" id))
+      (insert (format "#define %s_H\n" id))
+      (insert (format "#endif\n" id)))))
+      
+               

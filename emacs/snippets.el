@@ -41,3 +41,7 @@
       (insert (format "#endif\n" id)))))
       
                
+(defun snip-bash-array ()
+  (interactive)
+  (snip-empty)
+  (insert-file-contents (snip-file "bash_array.sh")))

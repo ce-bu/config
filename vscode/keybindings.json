@@ -21,11 +21,12 @@
         "command": "extension.multiCommand.execute",
         "args": {
             "sequence": [
-                "cursorLineStart",
                 "cursorEndSelect",
                 "editor.action.clipboardCutAction"
             ]
         },
         "when": "editorTextFocus" // if you want this, you probably do
-    }
+    },
+    { "key": "alt+left",        "command": "workbench.action.navigateBack" },
+    { "key": "alt+right",       "command": "workbench.action.navigateForward" },
 ]

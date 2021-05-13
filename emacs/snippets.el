@@ -20,9 +20,12 @@
 (defun snip-file (name)
   (format "%s/%s" cbext-dir name))
 
+
 (defun snip-class (name)
   (interactive "MClass Name: ")
-  (snip-contents (snip-file "class.cpp") `(("name" . ,name) )))
+  (let ((klass (cdr (assoc system-type '((windows-nt . "class.cpp") (gnu/linux . "class-linux.cpp"))))))
+    (snip-contents (snip-file klass)
+                   `(("name" . ,name) ))))
 
 (defun snip-main ()
   (interactive)

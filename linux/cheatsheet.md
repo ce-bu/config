@@ -33,3 +33,10 @@ iptables -t mangle -o eth1 -A OUTPUT -j MARK --set-mark 1
 
 Debug sudo programs 
 sudo setcap cap_net_admin,cap_net_raw,cap_sys_admin,cap_sys_ptrace+ep /home/ubuser/.vscode/extensions/vadimcn.vscode-lldb-1.6.2/lldb/bin/lldb-server
+
+## ftrace
+cd /sys/kernel/debug/tracing
+echo function > current_tracer
+
+## idris
+stack install idris --resolver lts-12.26

@@ -121,3 +121,6 @@
     (switch-to-buffer-other-window buf)))
 
 (global-set-key "\C-z" 'shell-other-window)
+(global-set-key (kbd "M-<up>") 'xref-go-back)
+(global-set-key (kbd "M-<down>") 'xref-go-forward)
+

@@ -1,0 +1,29 @@
+
+# Style for C++
+Language: Cpp
+
+BasedOnStyle: Microsoft
+Standard: Cpp11
+TabWidth: 4
+ColumnLimit: 0
+SortIncludes: false
+BreakBeforeBraces: Allman
+PointerAlignment: Right
+AlignAfterOpenBracket: Align
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortFunctionsOnASingleLine: None
+AlwaysBreakBeforeMultilineStrings: true
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBinaryOperators: NonAssignment
+Cpp11BracedListStyle: true
+SpaceBeforeCpp11BracedList: false
+KeepEmptyLinesAtTheStartOfBlocks: false
+NamespaceIndentation: All
+SpaceAfterTemplateKeyword: true
+AlwaysBreakTemplateDeclarations: true
+ForEachMacros: [ BOOST_FOREACH ]
+AllowShortLambdasOnASingleLine: Empty
+AllowAllArgumentsOnNextLine: false
+BreakConstructorInitializers: BeforeComma
+AlignConsecutiveAssignments: true

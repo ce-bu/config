@@ -124,3 +124,5 @@
 (global-set-key (kbd "M-<up>") 'xref-go-back)
 (global-set-key (kbd "M-<down>") 'xref-go-forward)
 
+(load-file (format "%s/compile.el" cbext-dir))
+(global-set-key (kbd "<f7>") 'compile-cmake)

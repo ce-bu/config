@@ -36,6 +36,7 @@
 (use-package yaml-mode)
 (use-package haskell-mode)
 (use-package zenburn-theme)
+(use-package google-c-style)
 
 (load-theme 'zenburn t)
 (set-face-attribute 'region nil :background "#559")

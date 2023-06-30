@@ -111,7 +111,7 @@
                         (arglist-close . c-lineup-arglist)
                         (arglist-intro . google-c-lineup-expression-plus-4)
                         (statement-cont nil c-align-statement-cont)
-                        (statement-case-open . 0)
+                        (statement-case-open . +)
                         (label . /)
                         (substatement-label . 2)
                         (substatement-open . c-lineup-under-anchor)

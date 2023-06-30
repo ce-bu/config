@@ -26,14 +26,21 @@
      ((eq (char-after) ?.)
       (progn
         (c-beginning-of-statement-1)
-        (vector (+ 4  (current-column)))))
+        (if (looking-at "return")
+          (c-forward-sexp))
+        (vector (+ 5  (current-column)))))
 
      ((eq (char-after) ?{)
       (progn
         (c-beginning-of-statement-1)
         (vector (+ 7  (current-column)))))     
 
+     (t
+      (progn
+        (c-beginning-of-statement-1)
+        (vector (+ 4  (current-column)))))     
      )))
+
 
 ;;;###autoload
 (defconst cb-c-style

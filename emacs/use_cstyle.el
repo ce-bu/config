@@ -15,23 +15,25 @@
           (goto-char (match-beginning 0))
           (vector (+ 7 (current-column)))))))
 
-;; return alpha {
-;;                 a
-;;                 b
-;;              } <-- this is a substatement cont ?
+
+;; fix statement continuations
 
 (defun c-align-statement-cont (langelem)
-  (if (eq (c-langelem-sym langelem) 'statement-cont)
-      (save-excursion ;progn
-        (beginning-of-line)
-        (c-skip-ws-forward)
-        (cond ((= (char-after) ?}) (progn
-                                     (forward-char)
-                                     (backward-sexp)
-                                     (vector (current-column))))
-              (t (c-lineup-assignments langelem))))))
-  
+  (save-excursion
+    (beginning-of-line)
+    (c-skip-ws-forward)
+    (cond
+     ((eq (char-after) ?.)
+      (progn
+        (c-beginning-of-statement-1)
+        (vector (+ 4  (current-column)))))
 
+     ((eq (char-after) ?{)
+      (progn
+        (c-beginning-of-statement-1)
+        (vector (+ 7  (current-column)))))     
+
+     )))
 
 ;;;###autoload
 (defconst cb-c-style

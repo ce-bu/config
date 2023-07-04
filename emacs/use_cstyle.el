@@ -25,21 +25,23 @@
     (cond
      ((eq (char-after) ?.)
       (progn
-        (c-beginning-of-statement-1)
-        (if (looking-at "return")
-          (c-forward-sexp))
-        (vector (+ 5  (current-column)))))
+      (while (eq (caar (c-guess-basic-syntax)) 'statement-cont)
+        (c-backward-sexp))
+      (c-backward-sexp)
+      (vector (- (current-column) 1))
+      ))
 
      ((eq (char-after) ?{)
       (progn
-        (c-beginning-of-statement-1)
-        (vector (+ 7  (current-column)))))     
+        (c-backward-sexp)
+        (vector (+ 0  (current-column)))))     
 
      (t
       (progn
         (c-beginning-of-statement-1)
         (vector (+ 4  (current-column)))))     
      )))
+
 
 
 ;;;###autoload

@@ -34,6 +34,8 @@
      ((eq (char-after) ?{)
       (progn
         (c-backward-sexp)
+        (re-search-backward "\s" (c-point 'bol) t)
+        (c-forward-syntactic-ws)
         (vector (+ 0  (current-column)))))     
 
      (t
@@ -41,7 +43,7 @@
         (c-beginning-of-statement-1)
         (vector (+ 4  (current-column)))))     
      )))
-
+    
 
 
 ;;;###autoload

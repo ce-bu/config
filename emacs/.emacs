@@ -125,6 +125,16 @@
 (global-set-key (kbd "M-<up>") 'xref-go-back)
 (global-set-key (kbd "M-<down>") 'xref-go-forward)
 (global-set-key (kbd "M-]") 'xref-find-references)
+(global-set-key "\M-a" 'eglot-code-actions)
+(global-set-key "\M-f" 'eglot-format)
 
 (load-file (format "%s/compile.el" cbext-dir))
 (global-set-key (kbd "<f7>") 'compile-cmake)
+
+(add-hook 'rust-mode-hook 'eglot-ensure)
+
+(add-hook 'before-save-hook
+          (lambda ()
+            (when (eq major-mode 'rust-mode)
+              (eglot-format))))
+            

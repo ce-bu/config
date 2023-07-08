@@ -37,10 +37,11 @@
 (use-package haskell-mode)
 (use-package zenburn-theme)
 (use-package google-c-style)
+(use-package helm-gtags)
+(use-package rust-mode)
 
 (load-theme 'zenburn t)
 (set-face-attribute 'region nil :background "#559")
-
 
 (setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name "~/.ghcup/bin")))
 (setq exec-path (append exec-path '(expand-file-name "~/.ghcup/bin")))
@@ -49,6 +50,7 @@
   :hook (
          (haskell-mode . eglot-ensure)
          (c++-mode . eglot-ensure)
+         (rust-mode . eglot-ensure)
          ))
 
 (use-package flycheck :config (global-flycheck-mode))
@@ -67,8 +69,6 @@
 
 (load-file (format "%s/use_cstyle.el" cbext-dir))
 
-(use-package helm-gtags)
-
 (add-hook 'c-mode-common-hook
   (lambda ()
     (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
@@ -80,23 +80,6 @@
   (global-set-key (kbd "M-<down>") 'helm-gtags-next-history)
   (global-set-key (kbd "M-.") 'helm-gtags-dwim)
   (global-set-key (kbd "M-]") 'helm-gtags-find-tag))
-
-(defun indent-marked-files ()
-  (interactive)
-  (dolist (file (dired-get-marked-files))
-    (find-file file)
-    (indent-region (point-min) (point-max))
-    (save-buffer)
-    (kill-buffer nil)))
-
-
-(defun vc-indent-marked-files ()
-  (interactive)
-  (dolist (file (vc-dir-marked-files))
-    (find-file file)
-    (indent-region (point-min) (point-max))
-    (save-buffer)
-    (kill-buffer nil)))
     
 
 (with-eval-after-load 'eglot
@@ -121,6 +104,18 @@
     (switch-to-buffer (other-buffer buf))
     (switch-to-buffer-other-window buf)))
 
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '((rust-mode)
+                 . ("~/.cargo/bin/rust-analyzer"
+                    ))))
+
+(add-hook 'before-save-hook
+          (lambda ()
+            (when (eq major-mode 'rust-mode)
+              (eglot-format))))
+
 (global-set-key "\C-z" 'shell-other-window)
 (global-set-key (kbd "M-<up>") 'xref-go-back)
 (global-set-key (kbd "M-<down>") 'xref-go-forward)
@@ -128,13 +123,6 @@
 (global-set-key "\M-a" 'eglot-code-actions)
 (global-set-key "\M-f" 'eglot-format)
 
-(load-file (format "%s/compile.el" cbext-dir))
+(load-file (format "%s/extras.el" cbext-dir))
 (global-set-key (kbd "<f7>") 'compile-cmake)
 
-(add-hook 'rust-mode-hook 'eglot-ensure)
-
-(add-hook 'before-save-hook
-          (lambda ()
-            (when (eq major-mode 'rust-mode)
-              (eglot-format))))
-            

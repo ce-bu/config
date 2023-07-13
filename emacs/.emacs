@@ -39,6 +39,7 @@
 (use-package google-c-style)
 (use-package helm-gtags)
 (use-package rust-mode)
+(use-package gn-mode)
 
 (load-theme 'zenburn t)
 (set-face-attribute 'region nil :background "#559")
@@ -115,6 +116,9 @@
           (lambda ()
             (when (eq major-mode 'rust-mode)
               (eglot-format))))
+
+(add-to-list 'auto-mode-alist
+             '("\\.gn\\'" . gn-mode))
 
 (global-set-key "\C-z" 'shell-other-window)
 (global-set-key (kbd "M-<up>") 'xref-go-back)

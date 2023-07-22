@@ -9,7 +9,6 @@
 
 (custom-set-variables
  '(global-linum-mode t)
- '(indent-tabs-mode nil)
  '(mouse-drag-copy-region t))
 
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
@@ -51,6 +50,7 @@
   :hook (
          (haskell-mode . eglot-ensure)
          (c++-mode . eglot-ensure)
+         (c-mode . eglot-ensure)
          (rust-mode . eglot-ensure)
          ))
 
@@ -70,6 +70,7 @@
 
 (load-file (format "%s/use_cstyle.el" cbext-dir))
 
+
 (add-hook 'c-mode-common-hook
   (lambda ()
     (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
@@ -86,17 +87,19 @@
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
                '((c-mode c++-mode)
-                 . ("clangd"
+                 . ("/opt/llvm-15.0.7/bin/clangd"
                     "-j=8"
                     "--log=error"
-                    "--malloc-trim"
+		    "--use-dirty-headers"
+;                    "--malloc-trim"
                     "--background-index"
-                    "--clang-tidy"
-                    "--cross-file-rename"
+;                    "--clang-tidy=0"
+ ;                   "--cross-file-rename"
                     "--completion-style=detailed"
-                    "--pch-storage=memory"
-                    "--header-insertion=never"
-                    "--header-insertion-decorators=0"))))
+;                    "--pch-storage=memory"
+;                    "--header-insertion=never"
+;                    "--header-insertion-decorators=0"
+		    ))))
 
 (defun shell-other-window ()
   "Open a `shell' in a new window."

@@ -46,8 +46,8 @@
     
 
 
-;;;###autoload
-(defconst cb-c-style
+
+(defconst cb-c-style-classic
   `(
     (c-basic-offset . 4)
     (indent-tabs-mode . nil)
@@ -133,17 +133,40 @@
   
   "CB Programming Style.")
 
-(defun cb-set-c-style ()
-  "Set the current buffer's c-style to Google C/C++ Programming
-  Style. Meant to be added to `c-mode-common-hook'."
-  (interactive)
-  (make-local-variable 'c-tab-always-indent)
-  (setq c-tab-always-indent t)
-  (c-add-style "CB" cb-c-style t))
 
-(provide 'cb-c-style)
+(defconst cb-c-style-linux
+  `(
+    (c-basic-offset . 8)
+    (indent-tabs-mode . t)
+    (c-comment-only-line-offset . 0)
+    (c-offsets-alist . (
+                        (inexpr-class . +)
+			))))
 
-(add-hook 'c-mode-common-hook 'cb-set-c-style)
+(defgroup cb-c nil
+  "c-style"
+  :group 'cb-c
+  :prefix "cb-c-")
+  
+(defcustom cb-c-style 'linux
+  "custom c style"
+  :type '(choice
+	  (const :tag "linux" linux)
+	  (const :tag "classic" classic)
+	  )
+  :group 'cb-c)
+
+
+(defun cb-set-c-style-hook ()
+  ""
+  (c-add-style "CB"
+	       (cond
+		((eq cb-c-style 'linux) cb-c-style-linux)
+		((eq cb-c-style 'classic) cb-c-style-classic))
+	       t))
+
+
+(add-hook 'c-mode-common-hook 'cb-set-c-style-hook)
 
 (defun indent-buffer ()
   (interactive)

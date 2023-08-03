@@ -43,8 +43,6 @@
         (c-beginning-of-statement-1)
         (vector (+ 4  (current-column)))))     
      )))
-    
-
 
 
 (defconst cb-c-style-classic
@@ -141,7 +139,13 @@
     (c-comment-only-line-offset . 0)
     (c-offsets-alist . (
                         (inexpr-class . +)
+			(innamespace . 0)
+			(topmost-intro-cont . c-lineup-topmost-intro-cont)
+			(substatement-open . c-lineup-under-anchor)
+			(inline-open . 0)
+			(arglist-cont-nonempty c-lineup-arglist-close-under-pare)
 			))))
+
 
 (defgroup cb-c nil
   "c-style"

@@ -48,7 +48,7 @@
 
 (use-package eglot
   :hook (
-         (haskell-mode . eglot-ensure)
+;         (haskell-mode . eglot-ensure)
          (c++-mode . eglot-ensure)
          (c-mode . eglot-ensure)
          (rust-mode . eglot-ensure)
@@ -87,7 +87,7 @@
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
                '((c-mode c++-mode)
-                 . ("/opt/llvm-15.0.7/bin/clangd"
+                 . ("/Users/ubuser/opt/llvm-15.0.7/bin/clangd"
                     "-j=8"
                     "--log=error"
 		    "--use-dirty-headers"
@@ -133,3 +133,12 @@
 (load-file (format "%s/extras.el" cbext-dir))
 (global-set-key (kbd "<f7>") 'compile-cmake)
 
+
+(defun my-projectile-project-find-function (dir)
+    (let ((root (projectile-project-root dir)))
+      (and root (cons 'transient root))))
+
+(projectile-mode t)
+
+(with-eval-after-load 'project
+  (add-to-list 'project-find-functions 'my-projectile-project-find-function))

@@ -1,3 +1,10 @@
+(use-package google-c-style)
+
+(add-hook 'c-mode-common-hook
+  (lambda ()
+    (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+      (helm-gtags-mode 1))))
+
 
 (defun c-align-arglist-intro-under-par (langelem)
   (if (eq (c-langelem-sym langelem) 'arglist-intro)
@@ -145,7 +152,7 @@
 			(topmost-intro-cont . c-lineup-topmost-intro-cont)
 			(substatement-open . c-lineup-under-anchor)
 			(inline-open . 0)
-			(arglist-cont-nonempty c-lineup-arglist-close-under-pare)
+			(arglist-cont-nonempty c-lineup-arglist-close-under-paren)
 			))))
 
 

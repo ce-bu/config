@@ -16,16 +16,6 @@
   :config
   (add-to-list 'eglot-stay-out-of 'flymake))
 
-; locate a project
-(defun cargo-project (dir)
-  (let ((workspace (locate-dominating-file dir ".project.el")))
-    (if workspace
-      (list 'cargo workspace)
-      nil)))
-
-(cl-defmethod project-root ((project (head cargo)))
-  (nth 1 project))
-
 (add-hook 'before-save-hook
           (lambda ()
 	    (when (eq major-mode 'rust-mode)

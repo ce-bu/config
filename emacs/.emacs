@@ -29,8 +29,13 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; sub extensions
+(defvar ext-dir (file-name-directory load-file-name))
+
 (use-package markdown-mode)
 (use-package yaml-mode)
+
+(load-file (format "%s/use_project.el" ext-dir))
 
 ;; zenburn theme
 (use-package zenburn-theme)
@@ -71,11 +76,10 @@
 (global-set-key (kbd "M-<down>") 'xref-go-forward)
 (global-set-key (kbd "M-]") 'xref-find-references)
 
-;; sub extensions
-(defvar ext-dir (file-name-directory load-file-name))
 
 ;; c-style
 (load-file (format "%s/snippets.el" ext-dir))
 (load-file (format "%s/use_cstyle.el" ext-dir))
 
+;; eglot
 (load-file (format "%s/use_eglot.el" ext-dir))

@@ -28,7 +28,7 @@
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               '(rust-mode (executable-find "rust-analyzer" ))))
+               `(rust-mode . (,(executable-find "rust-analyzer")))))
 	       
 
 

@@ -16,18 +16,20 @@
   :config
   (add-to-list 'eglot-stay-out-of 'flymake))
 
+(use-package flycheck-rust);
 
-
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               '((rust-mode)
-                 . ("~/.cargo/bin/rust-analyzer"
-                    ))))
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 (add-hook 'before-save-hook
           (lambda ()
 	    (when (eq major-mode 'rust-mode)
 	      (eglot-format))))
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(rust-mode (executable-find "rust-analyzer" ))))
+	       
 
 
 (use-package flycheck :config (global-flycheck-mode))

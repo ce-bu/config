@@ -1,10 +1,17 @@
 $ToolsDir = $env:TOOLSDIR
 
+$ToolsDrive = Split-Path $ToolsDir -Qualifier
+
 function Windev-InitializePath()
 {
-    
+    $env:CARGO_HOME = "$ToolsDrive\cargo"
+	
     $env:PATH += ";$ToolsDir\Git\bin;$ToolsDir\Git\usr\bin"
     $env:PATH += ";$ToolsDir\emacs\bin"
+    $env:PATH += ";$ToolsDir\Code"
+    $env:PATH += ";$ToolsDir\SysInternals" 
+	
+	$env:PATH += ";${env:CARGO_HOME}\bin"
 }
 
 

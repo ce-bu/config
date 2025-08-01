@@ -1,0 +1,2 @@
+SUBSYSTEM=="block" ACTION=="add" ENV{ID_FS_USAGE}=="filesystem" RUN{program}+="/usr/bin/systemd-mount --no-block --automount=yes -o uid=1000 --collect $devnode /media/usb"
+

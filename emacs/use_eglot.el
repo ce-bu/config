@@ -2,6 +2,8 @@
 (use-package rust-mode
   :ensure t)
 
+(use-package clojure-mode)
+
 (use-package flymake-clippy
   :hook (rust-mode . flymake-clippy-setup-backend))
 
@@ -12,6 +14,7 @@
 (use-package eglot
   :ensure t
   :hook ((rust-mode . eglot-ensure)
+	 (clojure-mode . eglot-ensure)
          (eglot-managed-mode . manually-activate-flymake))
   :config
   (add-to-list 'eglot-stay-out-of 'flymake))

@@ -45,8 +45,6 @@
 (setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name "~/.ghcup/bin")))
 (setq exec-path (append exec-path '(expand-file-name "~/.ghcup/bin")))
 
-
-
 ;; GTAGS
 (use-package helm-gtags)
 (defun use-gtags()
@@ -83,3 +81,5 @@
 
 ;; eglot
 (load-file (format "%s/use_eglot.el" ext-dir))
+
+

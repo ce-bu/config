@@ -1,0 +1,2 @@
+# netplan: network.wifis.wlp0s20f3 (on NetworkManager deny-list)
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="54:05:db:36:36:18", NAME="eth0"

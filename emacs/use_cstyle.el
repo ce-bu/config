@@ -54,7 +54,7 @@
 
 (defconst cb-c-style-classic
   `(
-    (c-basic-offset . 4)
+    (c-basic-offset . 3)
     (indent-tabs-mode . nil)
     (c-comment-only-line-offset . 0)
     (c-offsets-alist . (

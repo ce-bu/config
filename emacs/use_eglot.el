@@ -31,7 +31,11 @@
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               `(rust-mode . (,(executable-find "rust-analyzer")))))
+               `((rust-ts-mode rust-mode) . (,(executable-find "rust-analyzer")
+					     :initializationOptions					     
+					     (:check (:command "clippy") :cargo (:targetDir "/tmp/rust-analyzer"))
+					     ))))
+
 	       
 
 

@@ -4,6 +4,7 @@
 ;;
 
 (setq backup-inhibited t)
+(global-display-line-numbers-mode 1)
 
 (custom-set-variables
  '(global-linum-mode t)
@@ -42,9 +43,6 @@
 (load-theme 'zenburn t)
 (set-face-attribute 'region nil :background "#559")
 
-(setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name "~/.ghcup/bin")))
-(setq exec-path (append exec-path '(expand-file-name "~/.ghcup/bin")))
-
 ;; GTAGS
 (use-package helm-gtags)
 (defun use-gtags()
@@ -62,13 +60,6 @@
     (switch-to-buffer (other-buffer buf))
     (switch-to-buffer-other-window buf)))
 
-
-;; GN
-(use-package gn-mode)
-(add-to-list 'auto-mode-alist
-             '("\\.gn\\'" . gn-mode))
-
-
 (global-set-key "\C-z" 'shell-other-window)
 (global-set-key (kbd "M-<up>") 'xref-go-back)
 (global-set-key (kbd "M-<down>") 'xref-go-forward)
@@ -79,7 +70,11 @@
 (load-file (format "%s/snippets.el" ext-dir))
 (load-file (format "%s/use_cstyle.el" ext-dir))
 
+(use-package company)
+
+
 ;; eglot
 (load-file (format "%s/use_eglot.el" ext-dir))
-
+;; project
+(load-file (format "%s/use_project.el" ext-dir))
 

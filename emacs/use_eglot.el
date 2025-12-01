@@ -2,52 +2,23 @@
 (use-package rust-mode
   :ensure t)
 
-(use-package clojure-mode)
-
-(use-package flymake-clippy
-  :hook (rust-mode . flymake-clippy-setup-backend))
-
-(defun manually-activate-flymake ()
-  (add-hook 'flymake-diagnostic-functions #'eglot-flymake-backend nil t)
-  (flymake-mode 1))
-
-(use-package eglot
-  :ensure t
-  :hook ((rust-mode . eglot-ensure)
-	 (clojure-mode . eglot-ensure)
-         (eglot-managed-mode . manually-activate-flymake))
-  :config
-  (add-to-list 'eglot-stay-out-of 'flymake))
-
-(use-package flycheck-rust);
-
-(with-eval-after-load 'rust-mode
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
 (add-hook 'before-save-hook
           (lambda ()
 	    (when (eq major-mode 'rust-mode)
 	      (eglot-format))))
 
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               `((rust-ts-mode rust-mode) . (,(executable-find "rust-analyzer")
-					     :initializationOptions					     
-					     (:check (:command "clippy") :cargo (:targetDir "/tmp/rust-analyzer"))
-					     ))))
 
-	       
-
-
-(use-package flycheck :config (global-flycheck-mode))
-(use-package company
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.5)
-  (company-tooltip-align-annotations t)
-  (company-tooltip-margin 2)
-  :config
-  (global-company-mode))
+(use-package eglot
+  :hook ((rust-mode nix-mode) . eglot-ensure)
+  :config (add-to-list 'eglot-server-programs
+                       `(rust-mode . (,(executable-find "rust-analyzer")
+				      :initializationOptions
+                                      ( :procMacro (:enable t)
+					:check (:command "clippy")
+					:cargo (
+					       :buildScripts (:enable t)
+					       :targetDir "/tmp/rust-analyzer")							     
+					       :features "all")))))
 
 (global-set-key "\M-a" 'eglot-code-actions)
 
@@ -69,3 +40,6 @@
 ;                    "--header-insertion-decorators=0"
 		    ))))
 
+(use-package company
+  :config
+  (global-company-mode))

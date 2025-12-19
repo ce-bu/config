@@ -17,7 +17,7 @@
 					:check (:command "clippy")
 					:cargo (
 					       :buildScripts (:enable t)
-					       :targetDir "/tmp/rust-analyzer")							     
+					       :targetDir (file-name-concat (getenv "HOME") ".rust-analyzer"))
 					       :features "all")))))
 
 (global-set-key "\M-a" 'eglot-code-actions)

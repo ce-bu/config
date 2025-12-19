@@ -78,3 +78,4 @@
 ;; project
 (load-file (format "%s/use_project.el" ext-dir))
 
+ (setq completion-ignore-case t)

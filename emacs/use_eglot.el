@@ -16,9 +16,10 @@
                                       ( :procMacro (:enable t)
 					:check (:command "clippy")
 					:cargo (
-					       :buildScripts (:enable t)
-					       :targetDir (file-name-concat (getenv "HOME") ".rust-analyzer"))
-					       :features "all")))))
+						:buildScripts (:enable t)
+					        :targetDir ".rust-analyzer" ;(file-name-concat (getenv "HOME") ".rust-analyzer")
+							     
+					       :features "all"))))))
 
 (global-set-key "\M-a" 'eglot-code-actions)
 
@@ -40,6 +41,13 @@
 ;                    "--header-insertion-decorators=0"
 		    ))))
 
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '((cperl-mode perl-mode) . ("/home/ubuser/.nvm/versions/node/v25.1.0/bin/perlnavigator" "--stdio"))))
+(add-hook 'cperl-mode-hook 'eglot-mode)
+(add-hook 'perl-mode-hook 'eglot-ensure)
+
 (use-package company
   :config
   (global-company-mode))
+

@@ -17,10 +17,8 @@
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ;("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")
-                         )
-      )
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize) ; activate all the packages
 
@@ -77,5 +75,7 @@
 (load-file (format "%s/use_eglot.el" ext-dir))
 ;; project
 (load-file (format "%s/use_project.el" ext-dir))
+
+(load-file (format "%s/use_haskell.el" ext-dir))
 
  (setq completion-ignore-case t)

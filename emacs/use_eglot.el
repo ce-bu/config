@@ -47,6 +47,9 @@
 (add-hook 'cperl-mode-hook 'eglot-mode)
 (add-hook 'perl-mode-hook 'eglot-ensure)
 
+(setenv "PATH" (concat "/home/ubuser/.ghcup/bin:" (getenv "PATH")))
+(add-to-list 'exec-path "/home/ubuser/.ghcup/bin")
+
 (use-package company
   :config
   (global-company-mode))

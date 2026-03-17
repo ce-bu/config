@@ -13,6 +13,8 @@ function Windev-InitializePath()
     $env:PATH += ";$ToolsDir\SysInternals" 
     $env:PATH += ";$ToolsDir\Bin" 
     $env:PATH += ";${env:USERPROFILE}\.cargo\bin"
+	
+	$env:GTK4_ROOT = "$ToolsDir\Gtk4"
 }
 
 

@@ -1,12 +1,16 @@
+# Assume the config is checked out under c:\Tools\Config
+# Windows shortcut
+# C:\Windows\System32\cmd.exe /k C:\Tools\Powershell\pwsh.exe -ExecutionPolicy Bypass -NoExit -Command " & { C:\Tools\Config\windev\devel.ps1 -ToolsDir C:\Tools } "
 
-# Change CurrentControlSet->Services\ConDrv start=2
-# C:/Program Files/PowerShell/7/pwsh.exe  -ExecutionPolicy Bypass  -NoExit -Command "& { c:/config/windev/devel.ps1 -ToolsDir c:/Tools}"
+# Terminal command 
+# C:\Tools\Powershell\pwsh.exe -ExecutionPolicy Bypass -NoExit -Command " & { C:\Tools\Config\windev\devel.ps1 -ToolsDir C:\Tools } "
 
 param(
     [string]$ToolsDir
 )
 
-$env:TOOLSDIR = "$ToolsDir"
-import-Module -Force $ToolsDir/config/windev/windev.psd1 -DisableNameChecking
+$thisDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$env:TOOLS_DIR = "$ToolsDir"
+
+import-Module -Force $thisDir\windev.psd1 -DisableNameChecking
 Windev-InitializePath
-cd c:/src

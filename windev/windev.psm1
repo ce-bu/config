@@ -1,23 +1,34 @@
-$ToolsDir = $env:TOOLSDIR
-
+$ToolsDir = $env:TOOLS_DIR
 $ToolsDrive = Split-Path $ToolsDir -Qualifier
 
 function Windev-InitializePath()
 {
-    $env:CARGO_HOME = "$ToolsDrive\cargo"
-	
-    $env:PATH += ";$ToolsDir\Git\bin;$ToolsDir\Git\usr\bin"
-    $env:PATH += ";$ToolsDir\emacs\bin"
+    $env:PATH = "${env:SystemRoot}"
+    $env:PATH += ";${env:SystemRoot}\System32"
+    $env:PATH += ";${env:ProgramFiles}\dotnet"
+    $env:PATH += ";%SystemRoot%\System32\Wbem"
+    $env:PATH += ";$ToolsDir\Powershell"
+    $env:PATH += ";$ToolsDir\Git\bin"
     $env:PATH += ";$ToolsDir\Code"
     $env:PATH += ";$ToolsDir\SysInternals" 
-	
-	$env:PATH += ";${env:CARGO_HOME}\bin"
+    $env:PATH += ";$ToolsDir\Bin" 
+    $env:PATH += ";${env:USERPROFILE}\.cargo\bin"
 }
 
 
 function Windev-FirstTime()
 {
     reg.exe add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
+    Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope CurrentUser
+    Write-Output "Installing Powershell Azure modules (this may take a while)"
+    Install-Module -Name Az -Repository PSGallery -Force
+}
+
+function Windev-SetProxy()
+{
+    $proxy = ([System.Net.WebRequest]::GetSystemWebproxy()).GetProxy('https://www.github.com').OriginalString
+    $env:HTTPS_PROXY = $proxy
+    $env:HTTP_PROXY = $proxy    
 }
 
 function Windev-SetVcVars()

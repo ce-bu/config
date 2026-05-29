@@ -12,8 +12,10 @@ function Windev-InitializePath()
     $env:PATH += ";$ToolsDir\Code"
     $env:PATH += ";$ToolsDir\SysInternals" 
     $env:PATH += ";$ToolsDir\Bin" 
+	$env:PATH += ";$ToolsDir\emacs\bin" 
     $env:PATH += ";${env:USERPROFILE}\.cargo\bin"
-	
+	$env:PATH = "$ToolsDir\Python;$ToolsDir\Python\Scripts;" + $env:PATH
+	$env:PATH += ";$ToolsDir\Perl\c\bin;$ToolsDir\Perl\c\bin;$ToolsDir\Perl\perl\bin" 
 	$env:GTK4_ROOT = "$ToolsDir\Gtk4"
 }
 

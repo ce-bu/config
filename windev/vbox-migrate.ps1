@@ -32,33 +32,38 @@ if (-not (Test-Path $vboxManage)) {
 function Export-VBoxVM {
     param([string]$Name, [string]$OutDir)
 
+    # Ensure output directory exists (handles trailing backslash and missing parent dirs)
+    $OutDir = $OutDir.TrimEnd('\/')
     if (-not (Test-Path $OutDir)) {
         New-Item -ItemType Directory -Path $OutDir -Force | Out-Null
+        Write-Host "  Created directory: $OutDir"
     }
 
-    $ovaFile = Join-Path $OutDir "$Name.ova"
+    # Replace spaces in filename to avoid path issues with VBoxManage
+    $safeFileName = $Name -replace ' ', '_'
+    $ovaFile = Join-Path $OutDir "$safeFileName.ova"
 
     # Check if VM is running - power off first if needed
-    $state = & $vboxManage showvminfo $Name --machinereadable |
-             Select-String '^VMState="(.+)"' |
-             ForEach-Object { $_.Matches[0].Groups[1].Value }
+    $vmInfo = & $vboxManage showvminfo "$Name" --machinereadable 2>&1
+    $stateMatch = $vmInfo | Select-String '^VMState="(.+)"'
+    $state = if ($stateMatch) { $stateMatch.Matches[0].Groups[1].Value } else { "unknown" }
 
     if ($state -eq "running") {
         Write-Host "  VM '$Name' is running. Sending ACPI shutdown..."
-        & $vboxManage controlvm $Name acpipowerbutton
+        & $vboxManage controlvm "$Name" acpipowerbutton
         Start-Sleep -Seconds 10
         # Wait for poweroff
         for ($i = 0; $i -lt 60; $i++) {
-            $state = & $vboxManage showvminfo $Name --machinereadable |
-                     Select-String '^VMState="(.+)"' |
-                     ForEach-Object { $_.Matches[0].Groups[1].Value }
+            $vmInfo = & $vboxManage showvminfo "$Name" --machinereadable 2>&1
+            $stateMatch = $vmInfo | Select-String '^VMState="(.+)"'
+            $state = if ($stateMatch) { $stateMatch.Matches[0].Groups[1].Value } else { "unknown" }
             if ($state -eq "poweroff" -or $state -eq "saved" -or $state -eq "aborted") { break }
             Start-Sleep -Seconds 5
         }
     }
 
     Write-Host "  Exporting '$Name' -> $ovaFile ..."
-    & $vboxManage export $Name --output $ovaFile --ovf20
+    & $vboxManage export "$Name" --output "$ovaFile" --ovf20
     if ($LASTEXITCODE -eq 0) {
         Write-Host "  SUCCESS: $ovaFile ($('{0:N0} MB' -f ((Get-Item $ovaFile).Length / 1MB)))"
     } else {

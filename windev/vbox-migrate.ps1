@@ -16,7 +16,8 @@
 param(
     [Parameter(Mandatory)][ValidateSet("Export","Import")][string]$Action,
     [string[]]$VMNames,
-    [Parameter(Mandatory)][string]$OvaPath
+    [Parameter(Mandatory)][string]$OvaPath,
+    [string]$BasePath
 )
 
 # Find VBoxManage
@@ -72,7 +73,7 @@ function Export-VBoxVM {
 }
 
 function Import-VBoxOva {
-    param([string]$OvaFile)
+    param([string]$OvaFile, [string]$BasePath)
 
     if (-not (Test-Path $OvaFile)) {
         Write-Error "File not found: $OvaFile"
@@ -80,7 +81,11 @@ function Import-VBoxOva {
     }
 
     Write-Host "  Importing $OvaFile ..."
-    & $vboxManage import $OvaFile --options keepallmacs
+    $importArgs = @($OvaFile, '--options', 'keepallmacs')
+    if ($BasePath) {
+        $importArgs += '--vsys', '0', '--basefolder', $BasePath
+    }
+    & $vboxManage import @importArgs
     if ($LASTEXITCODE -eq 0) {
         Write-Host "  SUCCESS: Imported $(Split-Path $OvaFile -Leaf)"
     } else {
@@ -113,11 +118,11 @@ switch ($Action) {
             }
             Write-Host "=== Importing $($ovaFiles.Count) VM(s) from $OvaPath ==="
             foreach ($f in $ovaFiles) {
-                Import-VBoxOva -OvaFile $f.FullName
+                Import-VBoxOva -OvaFile $f.FullName -BasePath $BasePath
             }
         } else {
             Write-Host "=== Importing from $OvaPath ==="
-            Import-VBoxOva -OvaFile $OvaPath
+            Import-VBoxOva -OvaFile $OvaPath -BasePath $BasePath
         }
     }
 }
